@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+*.zip
+*.parquet
+*.npy
+*.npz
+*.pkl
+*.joblib
+*.pt
+*.pth
+data_raw/
+data_processed/
+results/
+catboost_info/

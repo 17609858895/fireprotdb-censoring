@@ -1,0 +1,80 @@
+[
+  {
+    "file": "scripts/00_extract_sql_tables.py",
+    "original_source": "scripts/00_extract_sql_tables.py",
+    "sha256": "b10aed5b90c2237eae3a77305e8f85cbc63bb83b9db19b04055b7a3551fcdc18",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/01_profile_database.py",
+    "original_source": "scripts/01_profile_database.py",
+    "sha256": "1fdd6619c03b05cba618320af9ef47c5e6bb11f3de653783728772a01ad3f601",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/02_build_megascale_table.py",
+    "original_source": "scripts/02_build_megascale_table.py",
+    "sha256": "5b1115aecb019a6dac6a4c0291d1d56b557df245dad0504fd962b59360251733",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/03_build_model_matrix.py",
+    "original_source": "scripts/03_build_model_matrix.py",
+    "sha256": "c3b25b17b17390bed2a57b64a0d8f47e198c180405341808dc11555e3fc51caf",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/04_benchmark_21models.py",
+    "original_source": "scripts/04_benchmark_21models.py",
+    "sha256": "cdf8e707b034b3b80b7e0e105c07e27249c9fd82a54a609b026084633d87573d",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/05_censored_vs_standard.py",
+    "original_source": "scripts/05_censored_vs_standard.py",
+    "sha256": "c3f2b67c2208a87f0e65db18f2df29c26a23dd91942047f8f8c25ef0ae5d3ae6",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/07_semisynthetic_censoring.py",
+    "original_source": "scripts/07_semisynthetic_censoring.py",
+    "sha256": "d30c357a3bf96cc6c8812ce1584776063bcf0bd6b99cd1f64c0ab6df2f09b12a",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/09_censored_stacking.py",
+    "original_source": "scripts/09_censored_stacking.py",
+    "sha256": "a261e9535d2a99e26f7bc2d6cfdbf179117a58a1ecdd74ad3d637c7263e90870",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/13_plm_features.py",
+    "original_source": "scripts/13_plm_features.py",
+    "sha256": "8ce37ca8cd1eef297b5c0389bfb484ae2c8fd649a1383ce536371657068e19a1",
+    "changes": "comment-only clarification"
+  },
+  {
+    "file": "scripts/15_global_epistasis.py",
+    "original_source": "scripts/15_global_epistasis.py",
+    "sha256": "53737f3f5cb6f83ea05bda1672ceb81554b4da2bec2b1bb43640a9912e97155f",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/16_doubles_censored.py",
+    "original_source": "scripts/16_doubles_censored.py",
+    "sha256": "1c891e735a9496da95cd87dc85d3d79b9853db1816e90c06ab84b9d3159daa64",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/censored_lib.py",
+    "original_source": "scripts/censored_lib.py",
+    "sha256": "f223fc4ee3f50500daa2ef17d7182d0aff9da1b11f94a7d57123ea759bde1680",
+    "changes": "comment-only clarification"
+  },
+  {
+    "file": "scripts/fp_features.py",
+    "original_source": "scripts/fp_features.py",
+    "sha256": "b95c99feeba2806c3752688c1c11051a9e0e3bcd8426ee35ad622efb365b5dcf",
+    "changes": "none"
+  }
+]
