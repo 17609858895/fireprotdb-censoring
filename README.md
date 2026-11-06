@@ -2,13 +2,15 @@
 
 Core analysis code for **Dynamic-range censoring and reference choice reshape megascale protein stability prediction**.
 
-This compact release contains data preparation, descriptors and sequence grouping, censored-normal and accelerated-failure-time learners, censored stacking, imposed-window experiments, unmasked ESM-2 feature extraction, double-substitution prediction and record-weighted global-epistasis fitting. Raw database files, derived measurement tables, predictions, model weights and manuscript files are not redistributed here.
+This compact release contains data preparation, descriptors and sequence grouping, censored-normal and accelerated-failure-time learners, censored stacking, imposed-window experiments, unmasked ESM-2 features and their predictor comparison, double-substitution prediction, record-weighted global-epistasis fitting, external-reference mapping and within-domain reference comparisons. Raw database files, derived measurement tables, predictions, model weights and manuscript files are not redistributed here.
 
 ## Data and scope
 
 Obtain `fireprotdb_dump_2025_09_22.zip` from the [official FireProtDB download page](https://loschmidt.chemi.muni.cz/fireprotdb/download/) and observe the [database terms](https://loschmidt.chemi.muni.cz/fireprotdb/terms-of-use/). The source publication is [FireProtDB 2.0](https://doi.org/10.1093/nar/gkaf1211). The analysed archive has SHA-256 `17d392f221016b34fea36c96d13184f79c173f5d0831b6a0a6e7639529d41ba0` and contains `01_fireprotdb_2025-09-20.sql`.
 
-This is a release of the important computational components, not an executable manuscript-production bundle. External-reference assembly, the manuscript-specific plot exporters and document construction are outside this compact release. The article's Supplementary Information gives those comparison and matching rules. The ESM checkpoint is obtained separately through Hugging Face and retains its own terms.
+This is a release of the important computational components, not an executable manuscript-production bundle. The manuscript-specific plot exporters and document construction are outside this compact release. The article's Supplementary Information gives the comparison and matching rules. The ESM checkpoint is obtained separately through Hugging Face and retains its own terms.
+
+`config/reference_sequence_candidates.csv` is the frozen candidate identifier configuration used by the cross-assay mapper. It contains database sequence IDs, dataset IDs and overlap statistics, not amino-acid sequences or assay measurements. The original candidate-discovery generator was not retained; the mapper reproduces offset alignment and identity filtering from this supplied candidate list. Its original-source SHA-256 is recorded in the local release manifest.
 
 ## Environment
 
@@ -31,6 +33,7 @@ python scripts/00_extract_sql_tables.py --zip fireprotdb_dump_2025_09_22.zip --o
 python scripts/01_profile_database.py data_raw results/01_profile
 python scripts/02_build_megascale_table.py data_raw data_processed
 python scripts/03_build_model_matrix.py
+python scripts/06_cross_assay_map.py data_raw
 python scripts/05_censored_vs_standard.py
 python scripts/07_semisynthetic_censoring.py
 python scripts/09_censored_stacking.py
@@ -42,10 +45,16 @@ Optional components:
 
 ```bash
 python scripts/13_plm_features.py
+python scripts/14_plm_recheck.py
+python scripts/18_within_domain_validation.py
+python scripts/20_dissociation_test.py
+python scripts/21_matched_reference.py
 python scripts/04_benchmark_21models.py 25000
 ```
 
 `13_plm_features.py` downloads `facebook/esm2_t30_150M_UR50D` and extracts hidden states and logits from **unmasked wild-type** sequences. It does not calculate masked-marginal scores. `04_benchmark_21models.py` is a budget-limited context benchmark; expensive methods use smaller training samples, as specified in the code. It does not provide a train–test gap audit.
+
+The reference scripts require the mapped measurements from step 06 and the PLM outputs. Step 18 computes variant-count-weighted within-domain correlations. Step 20 pairs eligible domains while retaining each reference's substitution set. Step 21 computes the identical-substitution sensitivity with equal domain weights. Their eligibility sets and estimands must be kept distinct. The principal predictors share eight eligible domains and 300 identical observed substitutions; the channel score covers 299 of those substitutions.
 
 The scripts support `FP_NJ` for selected learners' thread counts. The default analysis settings, seeds and iteration budgets are in the source. Substantial CPU time and memory are required for full runs.
 
@@ -69,4 +78,4 @@ python -m unittest discover -s tests -v
 
 The tests compile every released script, compare analytic censored-likelihood derivatives with finite differences, check point and tail contributions against independent distribution calculations, check interval-ordering behaviour and check the softplus link. They do not train a model, download data or rerun the reported experiments.
 
-`source_manifest.json` records the released source hashes and the two comment-only terminology clarifications relative to the local analysis source. Scientific calculations and preprocessing were preserved.
+`source_manifest.json` records source hashes and changes relative to the local analysis source: terminology clarifications, the candidate-configuration path, removal of the invalid legacy channel-training branch from the public reference evaluator, and extraction of the matched-reference calculation from a longer audit script. The retained predictors' scientific calculations and preprocessing were preserved. The public reference evaluator uses an explicit whitelist of valid Drop/Interval representation predictions.

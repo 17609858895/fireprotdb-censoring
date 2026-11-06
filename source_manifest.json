@@ -76,5 +76,41 @@
     "original_source": "scripts/fp_features.py",
     "sha256": "b95c99feeba2806c3752688c1c11051a9e0e3bcd8426ee35ad622efb365b5dcf",
     "changes": "none"
+  },
+  {
+    "file": "scripts/06_cross_assay_map.py",
+    "original_source": "scripts/06_cross_assay_map.py",
+    "sha256": "2400fa81d814a49e2f2e957a682ea0e8e1f5d8315e5f535bbcb9690faf322aee",
+    "changes": "candidate IDs read from bundled frozen identifier-only configuration"
+  },
+  {
+    "file": "scripts/14_plm_recheck.py",
+    "original_source": "scripts/14_plm_recheck.py",
+    "sha256": "9c3ad57a8b014b7c5c493a78d2fdf18b8bd12cf77150c94f3d7f3c973e37132f",
+    "changes": "comment-only correction: inference uses an unmasked wild-type sequence"
+  },
+  {
+    "file": "scripts/18_within_domain_validation.py",
+    "original_source": "scripts/18_within_domain_validation.py",
+    "sha256": "cfc8a71c2ebfb1eefe7262d388d329ccd0b01a404ef87fe679673cc377a68d25",
+    "changes": "exclude invalid legacy channel-label training branch; whitelist valid representation/label-treatment comparisons"
+  },
+  {
+    "file": "scripts/20_dissociation_test.py",
+    "original_source": "scripts/20_dissociation_test.py",
+    "sha256": "109e0519ca0bf9c28087cdd430461df540d14804d075b2808a207b4ac491db00",
+    "changes": "none"
+  },
+  {
+    "file": "scripts/21_matched_reference.py",
+    "original_source": "checks/audit_evidence.py",
+    "sha256": "5ba90c6b2a1befb88b6616f464995ddd811b3372880e866603c68e4b55ff986f",
+    "changes": "retained reference comparison section only; outputs to results/21_matched_reference; no audit/environment/benchmark sections"
+  },
+  {
+    "file": "config/reference_sequence_candidates.csv",
+    "original_source": "results/01_profile/megascale_overlap_seq.csv",
+    "sha256": "0b38c907aae3b1159fb77b77714a1e82ba7f55e13860b5e2d24da729f99098af",
+    "changes": "none; frozen identifier-only candidate configuration"
   }
 ]

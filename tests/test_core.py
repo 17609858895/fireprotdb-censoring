@@ -5,8 +5,9 @@ from pathlib import Path
 import unittest
 
 import numpy as np
+import pandas as pd
 from scipy.special import log_ndtr
-from scipy.stats import norm
+from scipy.stats import norm,spearmanr
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -15,12 +16,13 @@ def selected_functions(filename,names):
     body=[node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name in names]
     assert {node.name for node in body}==set(names)
     module=ast.Module(body=body,type_ignores=[])
-    scope={'np':np,'log_ndtr':log_ndtr,'LOG_SQRT_2PI':.5*np.log(2*np.pi)}
+    scope={'np':np,'log_ndtr':log_ndtr,'LOG_SQRT_2PI':.5*np.log(2*np.pi),'MIN_N':12,'MIN_DOMAINS':8,'spearmanr':spearmanr}
     exec(compile(module,filename,'exec'),scope)
     return scope
 
 C=selected_functions('censored_lib.py',['_types','tobit_nll','tobit_grad_hess','interval_cindex'])
 E=selected_functions('15_global_epistasis.py',['link'])
+R=selected_functions('18_within_domain_validation.py',['within_domain_rho'])
 
 class CoreChecks(unittest.TestCase):
     def test_all_scripts_compile(self):
@@ -57,5 +59,15 @@ class CoreChecks(unittest.TestCase):
         th=np.array([-5.,np.log(.8),.2,np.log(.7)])
         vals=E['link'](np.array([-100.,-6.,-4.,100.]),th)
         self.assertTrue(np.all(np.diff(vals)>0));self.assertAlmostEqual(vals[0],-5.,places=12);self.assertAlmostEqual(vals[-1],100.2,places=10)
+
+    def test_reference_domain_weighting(self):
+        rows=[]
+        for domain in range(8):
+            n=12 if domain<4 else 24
+            for i in range(n):rows.append({'wt_seq_id':domain,'prediction':i+1000*domain,'reference':i if domain<4 else -i})
+        estimate,lo,hi,n,domains=R['within_domain_rho'](pd.DataFrame(rows),'prediction','reference')
+        self.assertAlmostEqual(estimate,-1/3,places=12)
+        self.assertEqual(n,144);self.assertEqual(domains,8)
+        self.assertLessEqual(lo,estimate);self.assertGreaterEqual(hi,estimate)
 
 if __name__=='__main__':unittest.main()
